@@ -1,0 +1,72 @@
+{% set profile=profile or "base" -%}
+{% set dist=dist or "bullseye" -%}
+{% set username=username or "user" -%}
+{% set user_fullname=user_fullname or "User" -%}
+{% set user_password=user_password or "user" -%}
+{% set root_password=root_password or "root" -%}
+{% set hostname=hostname or "base" -%}
+{% set domain_name=domain_name or "domain" -%}
+
+recipe:
+  - action: conf
+    description: Simple-CDD configuration settings
+    variables:
+      locale: en_US
+      keyboard: us
+      profiles: {{profile}}
+      auto_profiles: {{profile}}
+      dist: {{dist}}
+      mirror_components: "main contrib non-free"
+    env_variables:
+      DISKTYPE: "DVD"
+
+  - action: preseed
+    description: Basic preseed file for minimum Debian system with EFI boot
+    preconf: preseeds/base-preseed.txt
+    substitutions:
+      user_fullname: {{user_fullname}}
+      username: {{username}}
+      user_password: {{user_password}}
+      root_password: {{root_password}}
+      hostname: {{hostname}}
+      domain: {{domain_name}}
+
+  - action: apt
+    description: Base packages
+    packages:
+      - adduser
+      - apparmor
+      - apt
+      - apt-transport-https
+      - apt-utils
+      - busybox
+      - ca-certificates
+      - dbus-user-session
+      - initramfs-tools
+      - iptables
+      - lsb-release
+      - openssh-server
+      - sudo
+      - systemd
+      - systemd-timesyncd
+      - unattended-upgrades
+
+  - action: script
+    description: Add {{username}} to sudoers
+    substitutions:
+      username: {{username}}
+    script: scripts/add_sudoer.sh
+
+  - action: script
+    description: Configure grub (output and no menu shown)
+    script: scripts/configure_grub.sh
+
+  - action: overlay
+    description: Bash settings for {{username}}
+    user: {{username}}
+    source: overlays/bash-settings
+  
+  - action: overlay
+    description: Bash settings for root
+    user: root
+    source: overlays/bash-settings

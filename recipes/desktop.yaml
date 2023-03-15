@@ -1,0 +1,68 @@
+{% set profile=profile or "desktop" -%}
+{% set dist=dist or "bullseye" -%}
+{% set username=username or "sietze" -%}
+{% set user_fullname=user_fullname or "S.W. van Buuren" -%}
+{% set user_password=user_password or "sietze" -%}
+{% set root_password=root_password or "root" -%}
+{% set hostname=hostname or "desktop" -%}
+{% set domain_name=domain_name or "domain" -%}
+
+
+recipe:
+  - action: recipe
+    description: Load base recipe
+    recipe: recipes/base.yaml
+    substitutions:
+      profile: {{profile}}
+      dist: {{dist}}
+      username: {{username}}
+      user_fullname: {{user_fullname}}
+      user_password: {{user_password}}
+      root_password: {{root_password}}
+      hostname: {{hostname}}
+
+  - action: recipe
+    description: Load xfce recipe
+    recipe: recipes/xfce.yaml
+    substitutions:
+      username: {{username}}
+
+  - action: apt
+    description: General packages
+    packages:
+      - alsa-utils
+      - bash
+      - bash-completion
+      - bzip2
+      - curl
+      - emacs
+      - evince
+      - git
+      - gawk
+      - gnome-disk-utility
+      - gpg
+      - mousepad
+      - network-manager
+      - pavucontrol
+      - pulseaudio
+      - rsync
+      - udev      
+      - screen
+      - synaptic
+      - tar
+      - wget
+
+  - action: apt
+    description: Utility packages
+    packages:
+      - cups
+      - doublecmd-qt
+      - firefox-esr
+      - gimp
+      - gnucash
+      - inkscape
+      - keepassxc
+      - libreoffice
+      - qbittorrent
+      - simple-scan
+      - vlc

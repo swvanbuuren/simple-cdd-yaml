@@ -1,0 +1,55 @@
+{% set username=username or "user" -%}
+
+recipe:
+  - action: apt
+    description: GUI packages
+    packages:
+      - adwaita-icon-theme
+      - at-spi2-core
+      - dbus-x11
+      - dmz-cursor-theme
+      - elementary-xfce-icon-theme
+      - fonts-ubuntu
+      - greybird-gtk-theme
+      - gvfs
+      - lightdm
+      - lightdm-gtk-greeter
+      - lightdm-gtk-greeter-settings
+      - light-locker
+      - mugshot
+      - ncurses-base
+      - ncurses-term
+      - network-manager-gnome
+      - policykit-1
+      - software-properties-gtk
+      - unclutter-xfixes
+      - xfce4
+      - xfce4-dict
+      - xfce4-clipman-plugin
+      - xfce4-datetime-plugin
+      - xfce4-fsguard-plugin
+      - xfce4-genmon-plugin
+      - xfce4-places-plugin
+      - xfce4-notifyd
+      - xfce4-power-manager
+      - xfce4-pulseaudio-plugin
+      - xfce4-screenshooter
+      - xfce4-sensors-plugin
+      - xfce4-taskmanager
+      - xfce4-terminal
+      - xfce4-timer-plugin
+      - xfce4-verve-plugin
+      - xfce4-whiskermenu-plugin
+      - xfce4-xkb-plugin
+      - xinput
+      - xserver-xorg
+      - xterm
+
+  - action: overlay
+    description: Xfce settings
+    user: {{username}}
+    source: overlays/xfce
+
+  - action: overlay
+    description: Lightdm greeter configuration
+    source: overlays/lightdm-greeter
