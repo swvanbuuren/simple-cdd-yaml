@@ -192,7 +192,7 @@ class OverlayAction(Action):
             overlay=filename,
             destination=destination,
         )
-        self._write_action(filename + '\n', extension='extra',
+        self._write_action(f'extra/{filename}\n', extension='extra',
                            no_duplicate=True)
         self._write_action(extract_commands, extension='postinst')
         return None
@@ -230,7 +230,7 @@ class ExtraAction(Action):
             src = pl.Path(file)
             dst = self.output_dir / 'extra' / src.name
             shutil.copyfile(src, dst)
-            extra_files.append(src.name)
+            extra_files.append('extra/' + src.name)
         self._print(' '.join(extra_files), header='Extra files:')
         return '\n'.join(extra_files) + '\n'
 

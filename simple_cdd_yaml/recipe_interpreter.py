@@ -13,9 +13,8 @@ POSTINST_TEMPLATE_STR = \
 PROFILE={{profile}}
 for mounted in /media/*/ ; do
     candidate=$mounted"simple-cdd"
-    if [ -d "$candidate"] ; then SCDD_EXTRAS="$candidate"; break; fi
+    if [ -d "$candidate" ] ; then SCDD_EXTRAS="$candidate"; break; fi
 done
-
 """
 
 
@@ -33,7 +32,7 @@ class YamlRecipeInterpreter():
         self._clear_profile()
         props = {
             'action': 'recipe',
-            'description': f'Load {self.profile} recipe', 
+            'description': f'Load {self.profile} recipe',
             'recipe': self.recipe_file,
             'substitutions': None,
         }

@@ -42,8 +42,8 @@ recipe:
       - xfce4-whiskermenu-plugin
       - xfce4-xkb-plugin
       - xinput
-      - xserver-xorg
-      - xterm
+      - xserver-xorg-input-all
+      - xorg
 
   - action: overlay
     description: Xfce settings
