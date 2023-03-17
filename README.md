@@ -1,7 +1,7 @@
 # Simple-cdd-yaml
 
-Preprocesser for Simple-CDD using YAML input files (so-called recipes), as inspired by
-[debos](https://github.com/go-debos/debos).
+Preprocesser for [Simple-CDD](https://salsa.debian.org/debian/simple-cdd) using YAML input
+files (so-called recipes), as inspired by [debos](https://github.com/go-debos/debos).
 
 ## Installation
 
