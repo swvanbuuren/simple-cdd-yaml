@@ -174,15 +174,14 @@ class OverlayAction(Action):
         user = props.get('user')
         overlay_name = props['source'].replace('/', '.')
         source_dir = pl.PurePath(pl.Path.cwd() / props['source'])
-        if user is None:
-            destination = '/'
-            tar_filter = None
-        elif user == 'root':
-            destination = '/root/'
-            tar_filter = OwnerTarFilter(user='root').tar_filter
-        else:
-            destination = f'/home/{user}/'
+        tar_filter = None
+        destination = '/'
+        if user:
+            overlay_name += f'.{user}'
             tar_filter = OwnerTarFilter(user=user).tar_filter
+            destination = f'/home/{user}/'
+            if user == 'root':
+                destination = '/root/'
         filename = f'{self.profile}.{overlay_name}.tar.gz'
         output_file = self.output_dir / 'extra' / filename
         with tarfile.open(output_file, "w:gz") as tar:
