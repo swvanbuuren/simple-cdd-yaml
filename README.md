@@ -12,7 +12,12 @@ pip install git+https://github.com/swvanbuuren/simple-cdd-yaml.git
 
 ## Usage
 
-After installation use the command `simple-cdd-yaml` to create Simple-CDD profiles from YAML files. Issue `simple-cdd-yaml --help` to get help.
+After installation use the command `simple-cdd-yaml` to create Simple-CDD
+profiles from YAML files. Issue `simple-cdd-yaml --help` to get help.
+
+Refer to
+[simple-cdd-yaml-recipes](https://github.com/swvanbuuren/simple-cdd-yaml-recipes)
+for example recipes.
 
 ## Documentation
 
@@ -20,4 +25,6 @@ Documentation is planned.
 
 ## License
 
-MIT License
+An MIT style license applies for mlpyqtgraph, see the [LICENSE](LICENSE) file for more
+details.
+
