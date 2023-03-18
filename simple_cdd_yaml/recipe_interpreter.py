@@ -4,6 +4,7 @@ import pathlib as pl
 import stat
 import jinja2
 from simple_cdd_yaml import actions
+from simple_cdd_yaml.yaml_loader import load_yaml
 
 
 POSTINST_TEMPLATE_STR = \
@@ -18,14 +19,28 @@ done
 """
 
 
+class ProfileException(Exception):
+    """ Raised when profile has not been defined """
+
+
 class YamlRecipeInterpreter():
     """ Yaml recipe interpreter for simple-cdd """
     def __init__(self, args):
         self.recipe_file = args.recipe
-        self.profile = args.profile
+        self.profile = self.find_profile_name(args)
+        args.profile = self.profile
         self.output_dir = pl.Path(args.output)
         self.postinst_template = jinja2.Template(POSTINST_TEMPLATE_STR)
         self.recipe_action = actions.RecipeAction(args)
+
+    def find_profile_name(self, args):
+        """ Try to find profile name """
+        full_yaml = load_yaml(self.recipe_file)
+        if profile := full_yaml.get('profile'):
+            return profile
+        if args.profile:
+            return args.profile
+        raise ProfileException('Profile not defined or found in recipe file!')
 
     def generate_profile(self):
         """ Generate simple-cdd profile output """
@@ -36,6 +51,7 @@ class YamlRecipeInterpreter():
             'recipe': self.recipe_file,
             'substitutions': None,
         }
+
         self.recipe_action.execute(props)
         print(''.center(70, '='))
         print(' Recipe done.')

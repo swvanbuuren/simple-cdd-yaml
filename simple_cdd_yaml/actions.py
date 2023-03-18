@@ -7,6 +7,7 @@ import shutil
 import textwrap
 import yaml
 import jinja2
+from simple_cdd_yaml.yaml_loader import load_yaml
 
 
 PACKAGES_TEMPLATE_STR = \
@@ -37,13 +38,6 @@ class OwnerTarFilter:
         tarinfo.uname = self.user
         tarinfo.gname = self.group
         return tarinfo
-
-
-class NullUndefined(jinja2.Undefined):
-    """ Jinja2 Undefined to parse jinja inside strings """
-    def __getattr__(self, key):
-        return ''
-
 
 class Action:
     """ Abstract action base class """
@@ -263,12 +257,7 @@ class RecipeAction(Action):
     @staticmethod
     def _load_recipe(file, substitutions=None):
         """ Load the yaml recipe """
-        with open(file, mode="r", encoding="utf-8") as data:
-            template = jinja2.Template(data.read(), undefined=NullUndefined)
-        if substitutions is None:
-            substitutions = {}
-        rendered = template.render(substitutions)
-        full_yaml = yaml.safe_load(rendered)
+        full_yaml = load_yaml(file, substitutions)
         return full_yaml['recipe']
 
     def _perform_action(self, props):

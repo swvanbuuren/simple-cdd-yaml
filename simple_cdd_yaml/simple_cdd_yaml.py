@@ -9,7 +9,7 @@ def main():
     parser = argparse.ArgumentParser(description='Generate simple-cdd profiles using YAML input')
     parser.add_argument('--recipe', type=str, required=True,
                         help='set the config yaml file')
-    parser.add_argument('--profile', type=str, required=True,
+    parser.add_argument('--profile', type=str, default=None,
                         help='profile name')
     parser.add_argument('--dist', type=str, default='bullseye',
                         help='Debian distribution (default: bullseye)')
