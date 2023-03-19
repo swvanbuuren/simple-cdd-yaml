@@ -16,6 +16,7 @@ for mounted in /media/*/ ; do
     candidate=$mounted"simple-cdd"
     if [ -d "$candidate" ] ; then SCDD_EXTRAS="$candidate"; break; fi
 done
+
 """
 
 
