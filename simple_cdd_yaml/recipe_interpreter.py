@@ -28,7 +28,6 @@ class YamlRecipeInterpreter():
     def __init__(self, args):
         self.recipe_file = args.recipe
         self.profile = self.find_profile_name(args)
-        args.profile = self.profile
         self.output_dir = pl.Path(args.output)
         self.postinst_template = jinja2.Template(POSTINST_TEMPLATE_STR)
         self.recipe_action = actions.RecipeAction(args)
@@ -37,6 +36,7 @@ class YamlRecipeInterpreter():
         """ Try to find profile name """
         full_yaml = load_yaml(self.recipe_file)
         if profile := full_yaml.get('profile'):
+            args.profile = profile
             return profile
         if args.profile:
             return args.profile
