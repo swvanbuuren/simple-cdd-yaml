@@ -225,7 +225,7 @@ class RunAction(Action):
         template = jinja2.Template(props['command'])
         command = template.render(props.get('substitutions', {}))
         if user:
-            command = f"su - {user} << 'EOF'\n{command}\nEOF\n"
+            command = f"su - {user} << 'EOF'\n{command}\nEOF"
         return f'\n# {description}\n{command}\n'
 
 
