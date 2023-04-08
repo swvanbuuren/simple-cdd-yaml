@@ -208,8 +208,11 @@ class RunAction(Action):
 
     def _perform_action(self, props):
         description = props.get('description', 'Run command')
+        user = props.get('user')
         template = jinja2.Template(props['command'])
         command = template.render(props.get('substitutions', {}))
+        if user:
+            command = f"su - {user} << 'EOF'\n{command}\nEOF\n"
         return f'\n# {description}\n{command}\n'
 
 
