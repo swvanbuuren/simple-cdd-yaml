@@ -52,7 +52,6 @@ class YamlRecipeInterpreter():
             'recipe': self.recipe_file,
             'substitutions': None,
         }
-
         self.recipe_action.execute(props)
         print(''.center(70, '='))
         print(' Recipe done.')

@@ -1,11 +1,11 @@
 """ Action handlers for Simple-cdd-yaml recipes """
 
+import os
 import pathlib as pl
 import tarfile
 import re
 import shutil
 import textwrap
-import yaml
 import jinja2
 from simple_cdd_yaml.yaml_loader import load_yaml
 
@@ -24,6 +24,19 @@ OVERLAY_TEMPLATE_STR = \
 tar -xf ${SCDD_EXTRAS}/{{overlay}} -C {{destination}}
 
 """
+
+
+class ChangeDirectory:
+    """Context manager for changing the current working directory"""
+    def __init__(self, new_path):
+        self.old_path = pl.Path.cwd()
+        self.new_path = new_path
+
+    def __enter__(self):
+        os.chdir(self.new_path)
+
+    def __exit__(self, etype, value, traceback):
+        os.chdir(self.old_path)
 
 
 class OwnerTarFilter:
@@ -266,12 +279,14 @@ class RecipeAction(Action):
     def _perform_action(self, props):
         recipe_file = props['recipe']
         substitutions = props.get('substitutions')
+        cwd = props.get('working_dir', pl.Path.cwd())
         recipe = self._load_recipe(recipe_file, substitutions)
-        for action_props in recipe:
-            action_type = action_props['action']
-            try:
-                action = self.actions[action_type]
-            except KeyError as exc:
-                raise KeyError('Unknown action type!') from exc
-            action.execute(action_props)
+        with ChangeDirectory(cwd):
+            for action_props in recipe:
+                action_type = action_props['action']
+                try:
+                    action = self.actions[action_type]
+                except KeyError as exc:
+                    raise KeyError('Unknown action type!') from exc
+                action.execute(action_props)
         return None
