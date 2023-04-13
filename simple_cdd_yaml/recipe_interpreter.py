@@ -31,7 +31,7 @@ class YamlRecipeInterpreter():
         self.profile = self.find_profile_name(args)
         self.output_dir = pl.Path(args.output)
         self.postinst_template = jinja2.Template(POSTINST_TEMPLATE_STR)
-        self.recipe_action = actions.RecipeAction(args)
+        self.recipe_action = actions.RecipeAction(vars(args))
 
     def find_profile_name(self, args):
         """ Try to find profile name """

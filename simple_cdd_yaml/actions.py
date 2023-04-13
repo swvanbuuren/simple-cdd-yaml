@@ -1,6 +1,5 @@
 """ Action handlers for Simple-cdd-yaml recipes """
 
-import os
 import pathlib as pl
 import tarfile
 import re
@@ -25,20 +24,6 @@ tar -xf ${SCDD_EXTRAS}/{{overlay}} -C {{destination}}
 
 """
 
-
-class ChangeDirectory:
-    """Context manager for changing the current working directory"""
-    def __init__(self, new_path):
-        self.old_path = pl.Path.cwd()
-        self.new_path = new_path
-
-    def __enter__(self):
-        os.chdir(self.new_path)
-
-    def __exit__(self, etype, value, traceback):
-        os.chdir(self.old_path)
-
-
 class OwnerTarFilter:
     """ Parametrizable tar filer """
     def __init__(self, user, group=None):
@@ -56,9 +41,10 @@ class Action:
     """ Abstract action base class """
     action_out = None
 
-    def __init__(self, args):
-        self.profile = args.profile
-        self.output_dir = pl.Path(args.output)
+    def __init__(self, args_dict):
+        self.profile = args_dict['profile']
+        self.input_dir = pl.Path(args_dict['input'])
+        self.output_dir = pl.Path(args_dict['output'])
 
     @staticmethod
     def _print(text, header=None, width=68):
@@ -86,10 +72,11 @@ class Action:
             if src := props.get(src_file):
                 self._print(f'{src_file.capitalize()}: {src}')
 
-    @staticmethod
-    def _read_subst(filename, substitutions):
+    def _read_substitute(self, filename, substitutions):
         """ Read string from file and perform jinja2 substitutions """
-        with open(filename, mode='r', encoding='utf-8') as file:
+        input_file = self.input_dir / filename
+        print(input_file)
+        with open(input_file, mode='r', encoding='utf-8') as file:
             template = jinja2.Template(file.read())
         return template.render(substitutions)
 
@@ -138,8 +125,8 @@ class ConfAction(Action):
 class PreseedAction(Action):
     """ Preseed action """
     def _perform_action(self, props):
-        return self._read_subst(props['preconf'],
-                                props.get('substitutions', {}))
+        return self._read_substitute(props['preconf'],
+                                     props.get('substitutions', {}))
 
 
 class AptAction(Action):
@@ -180,7 +167,7 @@ class OverlayAction(Action):
         description = props.get('description', 'Overlay')
         user = props.get('user')
         overlay_name = props['source'].replace('/', '.')
-        source_dir = pl.PurePath(pl.Path.cwd() / props['source'])
+        source_dir = pl.PurePath(self.input_dir / props['source'])
         tar_filter = None
         destination = '/'
         if user:
@@ -209,8 +196,8 @@ class ScriptAction(Action):
     action_out = 'postinst'
     def _perform_action(self, props):
         description = props.get('description', 'Script')
-        script = self._read_subst(props['script'],
-                                  props.get('substitutions', {}))
+        script = self._read_substitute(props['script'],
+                                       props.get('substitutions', {}))
         script = re.sub(r'#!/bin/.*?sh\n', '', script)
         return f'\n# {description}\n{script}\n'
 
@@ -256,37 +243,49 @@ class DownloadsAction(Action):
 
 class RecipeAction(Action):
     """ Recipe action """
-    def __init__(self, args):
-        super().__init__(args)
+    def __init__(self, args_dict):
+        super().__init__(args_dict)
+        self.args_dict = args_dict
         self.actions = {
-            'conf': ConfAction(args),
-            'preseed': PreseedAction(args),
-            'apt': AptAction(args),
-            'overlay': OverlayAction(args),
-            'script': ScriptAction(args),
-            'run': RunAction(args),
-            'extra': ExtraAction(args),
-            'downloads': DownloadsAction(args),
-            'recipe': self,
+            'conf': ConfAction,
+            'preseed': PreseedAction,
+            'apt': AptAction,
+            'overlay': OverlayAction,
+            'script': ScriptAction,
+            'run': RunAction,
+            'extra': ExtraAction,
+            'downloads': DownloadsAction,
+            'recipe': RecipeAction,
         }
 
-    @staticmethod
-    def _load_recipe(file, substitutions=None):
+    def _load_recipe(self, filename, substitutions=None):
         """ Load the yaml recipe """
-        full_yaml = load_yaml(file, substitutions)
+        recipe_file = self.input_dir / filename
+        print(recipe_file)
+        full_yaml = load_yaml(recipe_file, substitutions)
         return full_yaml['recipe']
 
+    def _working_dir(self, props):
+        """ Define the recipe's working dir """
+        if working_dir := props.get('working_dir'):
+            self.input_dir = pl.Path(working_dir)
+
+    def _get_args(self, props):
+        if working_dir := props.get('working_dir'):
+            return dict(self.args_dict, input=working_dir)
+        return dict(self.args_dict)
+
     def _perform_action(self, props):
-        recipe_file = props['recipe']
+        """ Perform all actions contained in the recipe """
+        self._working_dir(props)
+        recipe_filename =  props['recipe']
         substitutions = props.get('substitutions')
-        cwd = props.get('working_dir', pl.Path.cwd())
-        recipe = self._load_recipe(recipe_file, substitutions)
-        with ChangeDirectory(cwd):
-            for action_props in recipe:
-                action_type = action_props['action']
-                try:
-                    action = self.actions[action_type]
-                except KeyError as exc:
-                    raise KeyError('Unknown action type!') from exc
-                action.execute(action_props)
-        return None
+        recipe = self._load_recipe(recipe_filename, substitutions)
+        args_dict = self._get_args(props)
+        for action_props in recipe:
+            action_type = action_props['action']
+            try:
+                action = self.actions[action_type](args_dict)
+            except KeyError as exc:
+                raise KeyError('Unknown action type!') from exc
+            action.execute(action_props)

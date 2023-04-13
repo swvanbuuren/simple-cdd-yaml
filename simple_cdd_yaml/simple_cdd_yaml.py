@@ -15,6 +15,8 @@ def main():
                         help='Debian distribution (default: bullseye)')
     parser.add_argument('--output', type=str, default='.',
                         help='Profile output directory')
+    parser.add_argument('--input', type=str, default='.',
+                        help='Recipe/action working directory')
     try:
         arguments = parser.parse_args()
         interp.YamlRecipeInterpreter(arguments).generate_profile()
