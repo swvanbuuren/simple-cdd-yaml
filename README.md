@@ -1,11 +1,11 @@
-# Simple-cdd-yaml
+# Simple-CDD-YAML
 
 Preprocesser for [Simple-CDD](https://salsa.debian.org/debian/simple-cdd) using YAML input
 files (so-called recipes), as inspired by [debos](https://github.com/go-debos/debos).
 
 ## Installation
 
-Simple-cdd-yaml can be installed using `pip`:
+Simple-CDD-YAML can be installed using `pip`:
 ```
 pip install git+https://github.com/swvanbuuren/simple-cdd-yaml.git
 ```
@@ -25,6 +25,5 @@ Documentation is planned.
 
 ## License
 
-An MIT style license applies for mlpyqtgraph, see the [LICENSE](LICENSE) file for more
+An MIT style license applies for Simple-CDD-YAML, see the [LICENSE](LICENSE) file for more
 details.
-
