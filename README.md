@@ -1,7 +1,8 @@
 # Simple-CDD-YAML
 
-Preprocesser for [Simple-CDD](https://salsa.debian.org/debian/simple-cdd) using YAML input
-files (so-called recipes), as inspired by [debos](https://github.com/go-debos/debos).
+Preprocesser for [Simple-CDD](https://salsa.debian.org/debian/simple-cdd) using
+YAML input files (so-called recipes), as inspired by
+[debos](https://github.com/go-debos/debos).
 
 ## Installation
 
@@ -15,6 +16,8 @@ pip install git+https://github.com/swvanbuuren/simple-cdd-yaml.git
 After installation use the command `simple-cdd-yaml` to create Simple-CDD
 profiles from YAML files. Issue `simple-cdd-yaml --help` to get help.
 
+## Examples
+
 Refer to
 [simple-cdd-yaml-recipes](https://github.com/swvanbuuren/simple-cdd-yaml-recipes)
 for example recipes.
@@ -25,5 +28,5 @@ Documentation is planned.
 
 ## License
 
-An MIT style license applies for Simple-CDD-YAML, see the [LICENSE](LICENSE) file for more
-details.
+An MIT style license applies for Simple-CDD-YAML, see the [LICENSE](LICENSE)
+file for more details.
