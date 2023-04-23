@@ -84,12 +84,12 @@ class Action:
                       no_duplicate=False):
         """ Append string to profile file """
         filename = self.profile + '.' + extension
-        outpout_file = self.output_dir / directory / filename
-        if no_duplicate and outpout_file.is_file():
-            with open(outpout_file, mode='r', encoding='utf-8') as file:
+        output_file = self.output_dir / directory / filename
+        if no_duplicate and output_file.is_file():
+            with open(output_file, mode='r', encoding='utf-8') as file:
                 if string in file.read():
                     return
-        with open(outpout_file, mode='a', encoding='utf-8') as file:
+        with open(output_file, mode='a', encoding='utf-8') as file:
             file.write(string)
 
     def _perform_action(self, props):
@@ -194,6 +194,7 @@ class OverlayAction(Action):
 class ScriptAction(Action):
     """ Script action """
     action_out = 'postinst'
+    
     def _perform_action(self, props):
         description = props.get('description', 'Script')
         script = self._read_substitute(props['script'],
@@ -271,6 +272,7 @@ class RecipeAction(Action):
             self.input_dir = pl.Path(working_dir)
 
     def _get_args(self, props):
+        """ Get input arguments """
         if working_dir := props.get('working_dir'):
             return dict(self.args_dict, input=working_dir)
         return dict(self.args_dict)
