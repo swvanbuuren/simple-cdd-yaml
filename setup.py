@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from setuptools import setup, find_namespace_packages
+from setuptools import setup, find_packages
 
 with open('requirements.txt', mode='r', encoding='utf-8') as file:
     REQUIREMENTS = file.readlines()
@@ -13,7 +13,7 @@ setup(
     version='0.1',
     author='Sietze van Buuren',
     author_email='s.van.buuren@gmail.com',
-    packages=find_namespace_packages(include=['simple-cdd-yaml', 'simple-cdd-yaml.*']),
+    packages=find_packages(),
     python_requires=">=3.8",
     package_dir={"simple-cdd-yaml": "simple-cdd-yaml"},
     entry_points ={
