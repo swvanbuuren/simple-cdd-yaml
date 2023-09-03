@@ -75,7 +75,6 @@ class Action:
     def _read_substitute(self, filename, substitutions):
         """ Read string from file and perform jinja2 substitutions """
         input_file = self.input_dir / filename
-        print(input_file)
         with open(input_file, mode='r', encoding='utf-8') as file:
             template = jinja2.Template(file.read())
         return template.render(substitutions)
@@ -262,7 +261,6 @@ class RecipeAction(Action):
     def _load_recipe(self, filename, substitutions=None):
         """ Load the yaml recipe """
         recipe_file = self.input_dir / filename
-        print(recipe_file)
         full_yaml = load_yaml(recipe_file, substitutions)
         return full_yaml['recipe']
 
