@@ -118,7 +118,6 @@ class ConfAction(Action):
                 conf_str += f'export {var}="{value}"\n'
         if variables or env_variables:
             return conf_str
-        return None
 
 
 class PreseedAction(Action):
@@ -153,7 +152,6 @@ class AptAction(Action):
             packages.insert(0, '# ' + description)
             return '\n'.join(packages) + '\n\n'
             # return self._pkg_dependencies(pkg_list, description)
-        return None
 
 
 class OverlayAction(Action):
@@ -187,7 +185,6 @@ class OverlayAction(Action):
         self._write_action(f'extra/{filename}\n', extension='extra',
                            no_duplicate=True)
         self._write_action(extract_commands, extension='postinst')
-        return None
 
 
 class ScriptAction(Action):
