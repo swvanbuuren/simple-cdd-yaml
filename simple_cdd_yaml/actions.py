@@ -24,6 +24,11 @@ tar -xf ${SCDD_EXTRAS}/{{overlay}} -C {{destination}}
 
 """
 
+
+class ActionError(Exception):
+    """ Raised when something goes wrong in an action """
+
+
 class OwnerTarFilter:
     """ Parametrizable tar filer """
     def __init__(self, user, group=None):
@@ -187,28 +192,33 @@ class OverlayAction(Action):
         self._write_action(extract_commands, extension='postinst')
 
 
-class ScriptAction(Action):
-    """ Script action """
-    action_out = 'postinst'
-    
-    def _perform_action(self, props):
-        description = props.get('description', 'Script')
-        script = self._read_substitute(props['script'],
-                                       props.get('substitutions', {}))
-        script = re.sub(r'#!/bin/.*?sh\n', '', script)
-        return f'\n# {description}\n{script}\n'
-
-
 class RunAction(Action):
     """ Run action """
     action_out = 'postinst'
 
     def _perform_action(self, props):
+        if all(x in props for x in ['script', 'command']):
+            raise ActionError('Too many keywords: script and command found!')
+        if 'script' in props:
+            return self.script(props)
+        if 'command' in props:
+            return self.command(props)
+        raise ActionError('Missing script or command keyword!')
+
+    def script(self, props):
+        """ Shell commands to run a script """
+        description = props.get('description', 'Run script')
+        script = self._read_substitute(props['script'],
+                                       props.get('substitutions', {}))
+        script = re.sub(r'#!/bin/.*?sh\n', '', script)
+        return f'\n# {description}\n{script}\n'
+
+    def command(self, props):
+        """ Shell code to run a command """
         description = props.get('description', 'Run command')
-        user = props.get('user')
         template = jinja2.Template(props['command'])
         command = template.render(props.get('substitutions', {}))
-        if user:
+        if user:= props.get('user'):
             command = f"su - {user} << 'EOF'\n{command}\nEOF"
         return f'\n# {description}\n{command}\n'
 
@@ -248,7 +258,6 @@ class RecipeAction(Action):
             'preseed': PreseedAction,
             'apt': AptAction,
             'overlay': OverlayAction,
-            'script': ScriptAction,
             'run': RunAction,
             'extra': ExtraAction,
             'downloads': DownloadsAction,
