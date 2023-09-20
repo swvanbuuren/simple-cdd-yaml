@@ -15,8 +15,7 @@ following actions:
 - `conf` action: compose a `*.conf` file by supplying (environment) variables
 - `preseed` action: define a preseed file
 - `apt` action: add packages
-- `script` action: add a script (to `*.postinst`)
-- `run` action: add a command (to `*.postinst`)
+- `run` action: add a command or script (to `*.postinst`)
 - `overlay` action: add an overlay. An overlay is a file structure that is
   compressed into one single file and automatically added to `*.extra`.  
   A corresponding command to decompress the overly is added `*.postinst`
