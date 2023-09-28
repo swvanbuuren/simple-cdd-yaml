@@ -1,12 +1,13 @@
 """ Action handlers for Simple-cdd-yaml recipes """
 
+import copy
 import pathlib as pl
 import tarfile
 import re
 import shutil
 import textwrap
 import jinja2
-from simple_cdd_yaml.yaml_loader import load_yaml
+from simple_cdd_yaml.yaml_tools import load_yaml
 
 
 PACKAGES_TEMPLATE_STR = \
@@ -50,6 +51,9 @@ class Action:
         self.profile = args_dict['profile']
         self.input_dir = pl.Path(args_dict['input'])
         self.output_dir = pl.Path(args_dict['output'])
+        self.debos = args_dict['debos']
+        self.debos_output_dir = pl.Path(args_dict['debos_output']) / self.profile
+        self.result = []
 
     @staticmethod
     def _print(text, header=None, width=68):
@@ -109,6 +113,11 @@ class Action:
                 self.action_out = props['action']
             self._write_action(result, self.action_out)
 
+    def append_result(self, new_result: dict):
+        """ Append a new result to the result list """
+        added_result = copy.deepcopy(new_result)
+        self.result.append(added_result)
+
 
 class ConfAction(Action):
     """ Conf action """
@@ -148,6 +157,8 @@ class AptAction(Action):
             pkg_list = ' '.join(packages)
             self._print(pkg_list, header='Requested packages:')
             description = props.get('description', 'Install packages')
+            if self.debos:
+                self.append_result(props)
             if scripted:
                 apt_install_script = self.packages_template.render(
                     description=description,
@@ -156,7 +167,6 @@ class AptAction(Action):
                 return None
             packages.insert(0, '# ' + description)
             return '\n'.join(packages) + '\n\n'
-            # return self._pkg_dependencies(pkg_list, description)
 
 
 class OverlayAction(Action):
@@ -248,6 +258,12 @@ class DownloadsAction(Action):
         return f'# {description}\n{downloads_pkg_list}\n'
 
 
+class DebosAction(Action):
+    """ Debos action """
+    def _perform_action(self, props):
+        return None
+
+
 class RecipeAction(Action):
     """ Recipe action """
     def __init__(self, args_dict):
@@ -262,7 +278,15 @@ class RecipeAction(Action):
             'extra': ExtraAction,
             'downloads': DownloadsAction,
             'recipe': RecipeAction,
+            'debos': DebosAction,
         }
+
+    def create_action(self, action_type, args):
+        """ Create a new action """
+        try:
+            return self.actions[action_type](args)
+        except KeyError as exc:
+            raise KeyError('Unknown action type!') from exc
 
     def _load_recipe(self, filename, substitutions=None):
         """ Load the yaml recipe """
@@ -290,8 +314,10 @@ class RecipeAction(Action):
         args_dict = self._get_args(props)
         for action_props in recipe:
             action_type = action_props['action']
-            try:
-                action = self.actions[action_type](args_dict)
-            except KeyError as exc:
-                raise KeyError('Unknown action type!') from exc
+            action = self.create_action(action_type, args_dict)
             action.execute(action_props)
+            self.result.extend(action.result)
+
+    def get_result(self):
+        """ Return results dictionary """
+        return self.result

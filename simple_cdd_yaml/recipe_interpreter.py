@@ -1,10 +1,11 @@
 """ YAML recipe interpreter module """
 
 import pathlib as pl
+import shutil
 import stat
 import jinja2
 from simple_cdd_yaml import actions
-from simple_cdd_yaml.yaml_loader import load_yaml
+import simple_cdd_yaml.yaml_tools as yt
 
 
 POSTINST_TEMPLATE_STR = \
@@ -31,11 +32,21 @@ class YamlRecipeInterpreter():
         self.profile = self.find_profile_name(args)
         self.output_dir = pl.Path(args.output)
         self.postinst_template = jinja2.Template(POSTINST_TEMPLATE_STR)
+        self.debos_output_dir = pl.Path(args.debos_output) / self.profile
         self.recipe_action = actions.RecipeAction(vars(args))
+
+    def _recipe_props(self):
+        """ Get root recipe properties """
+        return {
+            'action': 'recipe',
+            'description': f'Load {self.profile} recipe',
+            'recipe': self.recipe_file,
+            'substitutions': None
+        }
 
     def find_profile_name(self, args):
         """ Try to find profile name """
-        full_yaml = load_yaml(self.recipe_file)
+        full_yaml = yt.load_yaml(self.recipe_file)
         if profile := full_yaml.get('profile'):
             args.profile = profile
             return profile
@@ -46,20 +57,17 @@ class YamlRecipeInterpreter():
     def generate_profile(self):
         """ Generate simple-cdd profile output """
         self._clear_profile()
-        props = {
-            'action': 'recipe',
-            'description': f'Load {self.profile} recipe',
-            'recipe': self.recipe_file,
-            'substitutions': None,
-        }
-        self.recipe_action.execute(props)
+        self.recipe_action.execute(self._recipe_props())
         print(''.center(70, '='))
         print(' Recipe done.')
 
-    @staticmethod
-    def _make_executable(file):
-        """ Adds executable permissions to file """
-        file.chmod(file.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+    def generate_debos_recipe(self):
+        """ Generate and obtain results dict and output to debos yaml recipe """
+        self._clear_debos_recipe()
+        output_file = self.debos_output_dir  / (self.profile + '.yaml')
+        self.recipe_action.execute(self._recipe_props())
+        debos_dict = self.recipe_action.get_result()
+        yt.save_yaml(output_file, debos_dict)
 
     def _clear_profile(self):
         """ Remove any pre-existing profile files in output directories """
@@ -79,6 +87,24 @@ class YamlRecipeInterpreter():
     def _write_action(self, string, extension, directory='profiles'):
         """ Append string to profile file """
         filename = self.profile + '.' + extension
-        outpout_file = self.output_dir / directory / filename
-        with open(outpout_file, mode='a', encoding='utf-8') as file:
+        output_file = self.output_dir / directory / filename
+        with open(output_file, mode='a', encoding='utf-8') as file:
             file.write(string)
+
+    def _clear_debos_recipe(self):
+        debos_dir = self.debos_output_dir
+        if debos_dir.is_dir():
+            shutil.rmtree(debos_dir)
+        self._create_dir(debos_dir)
+        self._create_dir(self.debos_output_dir / 'scripts')
+        self._create_dir(self.debos_output_dir / 'overlays')
+
+    @staticmethod
+    def _create_dir(pathlib_dir):
+        """ Creates a directory, even if it already exists """
+        pathlib_dir.mkdir(parents=True, exist_ok=True)
+
+    @staticmethod
+    def _make_executable(file):
+        """ Adds executable permissions to file """
+        file.chmod(file.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)

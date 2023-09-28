@@ -18,3 +18,9 @@ def load_yaml(file, substitutions=None):
         template = jinja2.Template(data.read(), undefined=NullUndefined)
     rendered = template.render(substitutions)
     return yaml.safe_load(rendered)
+
+
+def save_yaml(filepath, yaml_dict):
+    """ Store dictionary as yaml file """
+    with open(filepath, mode='w+', encoding="utf-8") as file:
+        yaml.dump(yaml_dict, file, allow_unicode=True)

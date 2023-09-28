@@ -17,9 +17,16 @@ def main():
                         help='Profile output directory')
     parser.add_argument('--input', type=str, default='.',
                         help='Recipe/action working directory')
+    parser.add_argument('--debos', type=bool, default=False,
+                        help='Whether or not to generate a debos recipe')
+    parser.add_argument('--debos-output', type=str, default='./debos',
+                        help='Debos recipe output directory')
     try:
         arguments = parser.parse_args()
-        interp.YamlRecipeInterpreter(arguments).generate_profile()
+        if arguments.debos:
+            interp.YamlRecipeInterpreter(arguments).generate_debos_recipe()
+        else:
+            interp.YamlRecipeInterpreter(arguments).generate_profile()
     except KeyboardInterrupt:
         pass
 
