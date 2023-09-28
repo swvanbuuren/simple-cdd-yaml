@@ -21,6 +21,8 @@ following actions:
   A corresponding command to decompress the overly is added `*.postinst`
 - `extra` action: add extra file
 - `downloads` action: add extra packages
+- `debos` action: [only in debos mode] add pre- and post-action to debos recipe
+  output
 
 Some of the actions support substitutions using
 [jinja](https://palletsprojects.com/p/jinja/) notation, making it easier to
