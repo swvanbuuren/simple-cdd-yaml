@@ -20,7 +20,24 @@ def load_yaml(file, substitutions=None):
     return yaml.safe_load(rendered)
 
 
+class LevelWhiteLineDumper(yaml.SafeDumper):
+    """ Adds white lines on below a given yaml object level """
+    level = 1
+
+    @classmethod
+    def set_level(cls, level):
+        """ Level below which white lines are included  """
+        cls.level = level
+        return cls
+
+    def write_line_break(self, data=None):
+        super().write_line_break(data)
+        if len(self.indents) < self.level + 1:
+            super().write_line_break()
+
+
 def save_yaml(filepath, yaml_dict):
     """ Store dictionary as yaml file """
     with open(filepath, mode='w+', encoding="utf-8") as file:
-        yaml.dump(yaml_dict, file, allow_unicode=True)
+        yaml.dump(yaml_dict, file, Dumper=LevelWhiteLineDumper.set_level(2),
+                  allow_unicode=True, width=4096, sort_keys=False)

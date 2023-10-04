@@ -66,8 +66,21 @@ class YamlRecipeInterpreter():
         self._clear_debos_recipe()
         output_file = self.debos_output_dir  / (self.profile + '.yaml')
         self.recipe_action.execute(self._recipe_props())
-        debos_dict = self.recipe_action.get_result()
-        yt.save_yaml(output_file, debos_dict)
+        result_dict = self.recipe_action.get_result()
+        debos_recipe = {
+            'architecture': result_dict['architecture'], 
+            'actions': [],
+        }
+        for action_list in ('pre-actions', 'actions', 'post-actions'):
+            debos_recipe['actions'] += result_dict[action_list]
+        if result_dict.get('chroot_default'):
+            for item in debos_recipe['actions']:
+                if item.get('action') == 'run' and 'chroot' not in item:
+                    item['chroot'] = True
+        yt.save_yaml(output_file, debos_recipe)
+        script_dir = self.debos_output_dir / 'scripts'
+        for file in script_dir.iterdir():
+            self._make_executable(file)
 
     def _clear_profile(self):
         """ Remove any pre-existing profile files in output directories """
