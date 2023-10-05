@@ -32,6 +32,7 @@ class YamlRecipeInterpreter():
         self.profile = self.find_profile_name(args)
         self.output_dir = pl.Path(args.output)
         self.postinst_template = jinja2.Template(POSTINST_TEMPLATE_STR)
+        self.debos = args.debos
         self.debos_output_dir = pl.Path(args.debos_output) / self.profile
         self.recipe_action = actions.RecipeAction(vars(args))
 
@@ -41,7 +42,7 @@ class YamlRecipeInterpreter():
             'action': 'recipe',
             'description': f'Load {self.profile} recipe',
             'recipe': self.recipe_file,
-            'substitutions': None
+            'substitutions': {'debos': self.debos}
         }
 
     def find_profile_name(self, args):

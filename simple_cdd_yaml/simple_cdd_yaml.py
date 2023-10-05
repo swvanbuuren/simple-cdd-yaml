@@ -17,8 +17,8 @@ def main():
                         help='Profile output directory')
     parser.add_argument('--input', type=str, default='.',
                         help='Recipe/action working directory')
-    parser.add_argument('--debos', type=bool, default=False,
-                        help='Whether or not to generate a debos recipe')
+    parser.add_argument('--debos', default=False, action='store_true',
+                        help='If provided, try to generate a debos recipe')
     parser.add_argument('--debos-output', type=str, default='./debos',
                         help='Debos recipe output directory')
     try:
