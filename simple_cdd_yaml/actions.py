@@ -276,7 +276,7 @@ class OverlayAction(Action):
         filename, destination = self.compress_overlay(props, output_dir)
         debos_action = dict(COMMAND_TEMPLATE_DICT,
             description=props.get('description', 'Overlay'),
-            command=f'tar -xf $ARTIFACTDIR/overlays/{filename} -C {destination}'
+            command=f'tar -xf $ARTIFACTDIR/overlays/{filename} -C $ROOTDIR{destination}'
         )
         self.append_result(debos_action)
 
