@@ -59,6 +59,7 @@ class OwnerTarFilter:
         tarinfo.gname = self.group
         return tarinfo
 
+
 class Action:
     """ Abstract action base class """
     action_out = None
