@@ -45,6 +45,11 @@ class YamlRecipeInterpreter():
             'substitutions': {'debos': self.debos}
         }
 
+    def _recipe_closing(self):
+        """ Print out recipe closing statement """
+        print(''.center(70, '='))
+        print(' Recipe done.')
+
     def find_profile_name(self, args):
         """ Try to find profile name """
         full_yaml = yt.load_yaml(self.recipe_file)
@@ -59,8 +64,7 @@ class YamlRecipeInterpreter():
         """ Generate simple-cdd profile output """
         self._clear_profile()
         self.recipe_action.execute(self._recipe_props())
-        print(''.center(70, '='))
-        print(' Recipe done.')
+        self._recipe_closing()
 
     def generate_debos_recipe(self):
         """ Generate and obtain results dict and output to debos yaml recipe """
@@ -82,6 +86,7 @@ class YamlRecipeInterpreter():
         script_dir = self.debos_output_dir / 'scripts'
         for file in script_dir.iterdir():
             self._make_executable(file)
+        self._recipe_closing()
 
     def _clear_profile(self):
         """ Remove any pre-existing profile files in output directories """
