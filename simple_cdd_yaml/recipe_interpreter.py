@@ -34,6 +34,7 @@ class YamlRecipeInterpreter():
         self.postinst_template = jinja2.Template(POSTINST_TEMPLATE_STR)
         self.debos = args.debos
         self.debos_output_dir = pl.Path(args.debos_output) / self.profile
+        self.recipe_vars = args.recipe_vars
         self.recipe_action = actions.RecipeAction(vars(args))
 
     def _recipe_props(self):
@@ -42,7 +43,7 @@ class YamlRecipeInterpreter():
             'action': 'recipe',
             'description': f'Load {self.profile} recipe',
             'recipe': self.recipe_file,
-            'substitutions': {'debos': self.debos}
+            'substitutions': dict(self.recipe_vars, debos=self.debos),
         }
 
     def _recipe_closing(self):
