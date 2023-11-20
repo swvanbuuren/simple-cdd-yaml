@@ -11,8 +11,6 @@ def main():
                         help='set the config yaml file')
     parser.add_argument('--profile', type=str, default=None,
                         help='profile name')
-    parser.add_argument('--dist', type=str, default='bullseye',
-                        help='Debian distribution (default: bullseye)')
     parser.add_argument('--output', type=str, default='.',
                         help='Profile output directory')
     parser.add_argument('--input', type=str, default='.',
