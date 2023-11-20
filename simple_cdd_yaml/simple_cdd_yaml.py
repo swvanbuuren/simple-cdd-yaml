@@ -4,6 +4,15 @@ import argparse
 import simple_cdd_yaml.recipe_interpreter as interp
 
 
+class KeyValueParseAction(argparse.Action):
+     def __call__(self, parser, namespace, values, option_string=None):
+         value_dict = {}
+         for item in values.split(','):
+             key, value = item.split('=')
+             value_dict[key] = value
+         setattr(namespace, self.dest, value_dict)
+
+
 def main():
     """ Command line interface for Simple-CDD-Yaml """
     parser = argparse.ArgumentParser(description='Generate simple-cdd profiles using YAML input')
@@ -19,8 +28,12 @@ def main():
                         help='If provided, try to generate a debos recipe')
     parser.add_argument('--debos-output', type=str, default='./debos',
                         help='Debos recipe output directory')
+    parser.add_argument('--vars', dest='recipe_vars', action=KeyValueParseAction,
+                        default='', metavar='key1=value1,key2=value2,...',
+                        help='Override root recipe variables')
     try:
         arguments = parser.parse_args()
+        print(arguments)
         if arguments.debos:
             interp.YamlRecipeInterpreter(arguments).generate_debos_recipe()
         else:
