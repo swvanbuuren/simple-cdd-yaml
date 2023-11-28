@@ -21,16 +21,16 @@ def main():
     parser.add_argument('--profile', type=str, default=None,
                         help='profile name')
     parser.add_argument('--output', type=str, default='.',
-                        help='Profile output directory')
+                        help='profile output directory (default: %(default)s)')
     parser.add_argument('--input', type=str, default='.',
-                        help='Recipe/action working directory')
+                        help='recipe/action working directory (default: %(default)s)')
     parser.add_argument('--debos', default=False, action='store_true',
-                        help='If provided, try to generate a debos recipe')
+                        help='if provided, try to generate a debos recipe instead')
     parser.add_argument('--debos-output', type=str, default='./debos',
-                        help='Debos recipe output directory')
+                        help='debos recipe output directory (default: %(default)s)')
     parser.add_argument('--vars', dest='recipe_vars', action=KeyValueParseAction,
                         default='', metavar='key1=value1,key2=value2,...',
-                        help='Override root recipe variables')
+                        help='override root recipe variables')
     try:
         arguments = parser.parse_args()
         print(arguments)
