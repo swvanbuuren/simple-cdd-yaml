@@ -33,7 +33,6 @@ def main():
                         help='override root recipe variables')
     try:
         arguments = parser.parse_args()
-        print(arguments)
         if arguments.debos:
             interp.YamlRecipeInterpreter(arguments).generate_debos_recipe()
         else:
