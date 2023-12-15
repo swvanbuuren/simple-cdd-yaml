@@ -199,7 +199,7 @@ class PreseedAction(Action):
     """ Preseed action """
     def perform_action(self, props):
         return self._read_substitute(props['preconf'],
-                                     props.get('substitutions', {}))
+                                     props.get('variables', {}))
 
     def perform_debos_action(self, props):
         return None
@@ -290,7 +290,7 @@ class RunAction(Action):
         """ Shell commands to run a script """
         description = props.get('description', 'Run script')
         script = self._read_substitute(props['script'],
-                                       props.get('substitutions', {}))
+                                       props.get('variables', {}))
         script = re.sub(r'#!/bin/.*?sh\n', '', script)
         return f'\n# {description}\n{script}\n'
 
@@ -298,7 +298,7 @@ class RunAction(Action):
         """ Shell code to run a command """
         description = props.get('description', 'Run command')
         template = jinja2.Template(props['command'])
-        command = template.render(props.get('substitutions', {}))
+        command = template.render(props.get('variables', {}))
         if user:= props.get('user'):
             command = f"su - {user} << 'EOF'\n{command}\nEOF"
         return f'\n# {description}\n{command}\n'
@@ -442,7 +442,7 @@ class RecipeAction(Action):
         """ Perform all actions contained in the recipe """
         self._working_dir(props)
         recipe_filename =  props['recipe']
-        substitutions = props.get('substitutions')
+        substitutions = props.get('variables')
         recipe = self._load_recipe(recipe_filename, substitutions)
         args_dict = self._get_args(props)
         for action_props in recipe:

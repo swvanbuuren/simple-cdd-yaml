@@ -43,7 +43,7 @@ class YamlRecipeInterpreter():
             'action': 'recipe',
             'description': f'Load {self.profile} recipe',
             'recipe': self.recipe_file,
-            'substitutions': dict(self.recipe_vars, debos=self.debos),
+            'variables': dict(self.recipe_vars, debos=self.debos),
         }
 
     def _recipe_closing(self):
