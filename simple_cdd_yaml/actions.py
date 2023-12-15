@@ -425,7 +425,7 @@ class RecipeAction(Action):
         """ Load the yaml recipe """
         recipe_file = self.input_dir / filename
         full_yaml = load_yaml(recipe_file, substitutions)
-        return full_yaml['recipe']
+        return full_yaml['actions']
 
     def _working_dir(self, props):
         """ Define the recipe's working dir """
