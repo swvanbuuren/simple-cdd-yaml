@@ -81,7 +81,7 @@ class YamlRecipeInterpreter():
             debos_recipe['actions'] += result_dict[action_list]
         if result_dict.get('chroot_default'):
             for item in debos_recipe['actions']:
-                if item.get('action') == 'run' and 'chroot' not in item:
+                if item.get('action') == 'run' and 'chroot' not in item and 'postprocess' not in item:
                     item['chroot'] = True
         yt.save_yaml(output_file, debos_recipe)
         script_dir = self.debos_output_dir / 'scripts'

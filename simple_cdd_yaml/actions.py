@@ -332,6 +332,9 @@ class RunAction(Action):
         return self.create_run_script(props)
 
     def perform_debos_action(self, props):
+        if 'postprocess' in props:
+            self.append_result(props)
+            return
         script_str = '#!/bin/sh' + self.create_run_script(props)
         filename = self.unique_filename(description=props.get('description'))
         output_file = self.debos_output_dir / 'scripts' / filename
