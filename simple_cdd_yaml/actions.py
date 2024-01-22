@@ -234,31 +234,46 @@ class AptAction(Action):
         self.append_result(props)
 
 
-
 class OverlayAction(Action):
     """ Overlay action """
     def __init__(self, args):
         super().__init__(args)
         self.overlay_template = jinja2.Template(OVERLAY_TEMPLATE_STR)
 
+    def source(self, props):
+        source = props['source']
+        if not source.startswith('/'):
+            return pl.PurePath(source)
+        return pl.PurePath(self.input_dir / source)
+
+    def overlay_name(self, props):
+        overlay_name = props['source'].replace('/', '.')
+        if user := props.get('user'):
+            return f'{overlay_name}.{user}'
+        return overlay_name
+
+    def tar_filter(self, props):
+        if user := props.get('user'):
+            return OwnerTarFilter(user=user).tar_filter
+        return None
+
+    def destination(self, props):
+        if user := props.get('user'):
+            if user == 'root':
+                return '/root/'
+            return f'/home/{user}/'
+        return props.get('destination', '/')
+
     def compress_overlay(self, props, output_dir):
         """ Compress overlay into tarball """
-        user = props.get('user')
-        overlay_name = props['source'].replace('/', '.')
-        source_dir = pl.PurePath(self.input_dir / props['source'])
-        tar_filter = None
-        destination = '/'
-        if user:
-            overlay_name += f'.{user}'
-            tar_filter = OwnerTarFilter(user=user).tar_filter
-            destination = f'/home/{user}/'
-            if user == 'root':
-                destination = '/root/'
-        filename = f'{self.profile}.{overlay_name}.tar.gz'
-        output_file = output_dir / filename
-        with tarfile.open(output_file, "w:gz") as tar:
-            tar.add(source_dir, arcname='', filter=tar_filter)
-        return filename, destination
+        name = self.overlay_name(props)
+        filename = f'{self.profile}.{name}.tar.gz'
+        src = self.source(props)
+        tfilter = self.tar_filter(props)
+        with tarfile.open(output_dir / filename, "w:gz") as tar:
+            tar.add(src, arcname='', filter=tfilter)
+        dest = self.destination(props)
+        return filename, dest
 
     def perform_action(self, props):
         output_dir = self.output_dir / 'extra'
