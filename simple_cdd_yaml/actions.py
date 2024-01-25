@@ -242,7 +242,7 @@ class OverlayAction(Action):
 
     def source(self, props):
         source = props['source']
-        if not source.startswith('/'):
+        if source.startswith('/'):
             return pl.PurePath(source)
         return pl.PurePath(self.input_dir / source)
 
