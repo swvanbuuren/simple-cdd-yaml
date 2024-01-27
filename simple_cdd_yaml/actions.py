@@ -258,11 +258,14 @@ class OverlayAction(Action):
         return None
 
     def destination(self, props):
+        """ If destination is provided, this overrules the user setting """
+        if dest := props.get('destination'):
+            return dest
         if user := props.get('user'):
             if user == 'root':
                 return '/root/'
             return f'/home/{user}/'
-        return props.get('destination', '/')
+        return '/'
 
     def compress_overlay(self, props, output_dir):
         """ Compress overlay into tarball """
