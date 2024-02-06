@@ -183,10 +183,10 @@ class ConfAction(Action):
         conf_str = f'# {description}\n'
         if variables := props.get('variables'):
             for var, value in variables.items():
-                conf_str += f'{var}="{value}"\n'
+                conf_str += f'{var}="{value.rstrip()}"\n'
         if env_variables := props.get('env_variables'):
             for var, value in env_variables.items():
-                conf_str += f'export {var}="{value}"\n'
+                conf_str += f'export {var}="{value.rstrip()}"\n'
         if variables or env_variables:
             return conf_str
         return None
