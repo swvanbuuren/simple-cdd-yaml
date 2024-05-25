@@ -1,9 +1,32 @@
 site_name: Simple-CDD-YAML Documentation
-site_url: https://swvanbuuren.github.io/simple-cdd-yaml
+site_url: https://swvanbuuren.github.io/simple-cdd-yaml/
+repo_url: https://swvanbuuren.github.io/simple-cdd-yaml
+repo_name: swvanbuuren/simple-cdd-yaml
+
 theme:
   name: material
+  features:
+  - navigation.sections
+  - navigation.tabs
+  - navigation.indexes
+
+plugins:
+  - search
+  - mkdocstrings
+
 markdown_extensions:
   - attr_list
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - Welcome: index.md
+  - Getting Started: getting_started.md
+  - Examples: examples.md
+  - API Reference:
+    - reference/index.md
+    - Simple-CDD-YAML: reference/simple_cdd_yaml.md
+    - Recipe Interpreter: reference/recipe_interpreter.md
+    - Actions: reference/actions.md
+    - YAML tools: reference/yaml_tools.md

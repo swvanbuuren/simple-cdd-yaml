@@ -5,7 +5,9 @@ Welcome to the documentation of
 
 ## :construction: Under construction :construction: 
 
-Soon, this site shall be filled with the documentation for
-[Simple-CDD-YAML](https://github.com/swvanbuuren/simple-cdd-yaml). 
+This documentation is still under construction.
 
-Stay tuned!
+At the time of writing, only the [API Reference](reference/index.md) is filled with
+life. 
+
+The [getting started](getting_started.md) and [examples](examples.md) sections are still under construction.
