@@ -1,4 +1,4 @@
-# API Reference
+# Code Reference
 
 Code reference documentation of Simple-CDD-YAML.
 

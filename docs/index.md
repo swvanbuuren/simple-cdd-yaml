@@ -5,9 +5,7 @@ Welcome to the documentation of
 
 ## :construction: Under construction :construction: 
 
-This documentation is still under construction.
-
-At the time of writing, only the [API Reference](reference/index.md) is filled with
-life. 
+At the time of writing, only the [Code Reference](reference/index.md) is filled
+with life.
 
 The [getting started](getting_started.md) and [examples](examples.md) sections are still under construction.

@@ -24,7 +24,7 @@ nav:
   - Welcome: index.md
   - Getting Started: getting_started.md
   - Examples: examples.md
-  - API Reference:
+  - Code Reference:
     - reference/index.md
     - Simple-CDD-YAML: reference/simple_cdd_yaml.md
     - Recipe Interpreter: reference/recipe_interpreter.md
