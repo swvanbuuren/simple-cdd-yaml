@@ -6,10 +6,9 @@ YAML input files (so-called recipes), as inspired by
 
 ## Introduction
 
-Simple-CDD-YAML uses so-called recipes in YAML format with which the profile
-files required Simple-CDD are generated. A recipe consists of actions, that
-generate or append files in the Simple-CDD profile. Simple-CDD-YAML features the
-following actions:
+Simple-CDD-YAML uses YAML recipes to generate the profile files required by
+Simple-CDD. A recipe consists of actions, that generate or append files in the
+Simple-CDD profile. Simple-CDD-YAML features the following actions:
 
 - `recipe` action: embed another recipe
 - `conf` action: compose a `*.conf` file by supplying (environment) variables
@@ -33,7 +32,9 @@ A few actions also support different roles: by default a script is run or an
 overlay is deployed as root, but you can also specify to have this done by a
 certain user.
 
-Please refer to the [documentation](#documentation) for more information.
+Please refer to the
+[documentation](https://swvanbuuren.github.io/simple-cdd-yaml/) for more
+information.
 
 ## Installation
 
@@ -55,7 +56,7 @@ for example recipes.
 
 ## Documentation
 
-Check out [the documentation](https://swvanbuuren.github.io/simple-cdd-yaml/) to
+Check out the [documentation](https://swvanbuuren.github.io/simple-cdd-yaml/) to
 get started, find more background information and query the code reference.
 
 ## License
