@@ -56,7 +56,7 @@ for example recipes.
 ## Documentation
 
 Check out [the documentation](https://swvanbuuren.github.io/simple-cdd-yaml/) to
-get started, find more background information and query the API Reference.
+get started, find more background information and query the code reference.
 
 ## License
 
