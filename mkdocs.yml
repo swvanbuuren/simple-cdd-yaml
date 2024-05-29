@@ -1,6 +1,6 @@
 site_name: Simple-CDD-YAML Documentation
 site_url: https://swvanbuuren.github.io/simple-cdd-yaml/
-repo_url: https://swvanbuuren.github.io/simple-cdd-yaml
+repo_url: https://github.com/swvanbuuren/simple-cdd-yaml
 repo_name: swvanbuuren/simple-cdd-yaml
 
 theme:
