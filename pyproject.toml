@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "simple-cdd-yaml"
+version = "0.1.0"
+description = "YAML recipe interpreter for Simple-CDD"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Sietze van Buuren", email = "s.van.buuren@gmail.com" }
+]
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+urls = { Homepage = "https://github.com/swvanbuuren/simple-cdd-yaml" }
+dependencies = [
+    "pyyaml",
+    "jinja2",
+]
+
+[project.scripts]
+simple-cdd-yaml = "simple_cdd_yaml.simple_cdd_yaml:main"
+
+[tool.setuptools.packages.find]
+include = ["simple_cdd_yaml", "simple_cdd_yaml.*"]
+
+[tool.semantic_release]
+version_variables = ["simple-cdd-yaml/__init__.py:__version__"]
+version_toml = ["pyproject.toml:project.version"]
