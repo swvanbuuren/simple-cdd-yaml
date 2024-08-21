@@ -5,12 +5,14 @@ import simple_cdd_yaml.recipe_interpreter as interp
 
 
 class KeyValueParseAction(argparse.Action):
-     def __call__(self, parser, namespace, values, option_string=None):
-         value_dict = {}
-         for item in values.split(','):
-             key, value = item.split('=')
-             value_dict[key] = value
-         setattr(namespace, self.dest, value_dict)
+    """ Parse comma separated key=value pairs """
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        value_dict = {}
+        for item in values.split(','):
+            key, value = item.split('=')
+            value_dict[key] = value
+        setattr(namespace, self.dest, value_dict)
 
 
 def main():
