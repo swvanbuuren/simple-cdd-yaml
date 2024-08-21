@@ -38,9 +38,11 @@ information.
 
 ## Installation
 
-Simple-CDD-YAML can be installed using `pip`:
-```
-pip install git+https://github.com/swvanbuuren/simple-cdd-yaml.git
+Simple-CDD-YAML can be directly installed from [PyPi](https://pypi.org) using
+`pip`:
+
+```bash
+pip install simple-cdd-yaml
 ```
 
 ## Usage
