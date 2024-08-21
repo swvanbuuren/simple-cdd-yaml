@@ -34,5 +34,5 @@ simple-cdd-yaml = "simple_cdd_yaml.simple_cdd_yaml:main"
 include = ["simple_cdd_yaml", "simple_cdd_yaml.*"]
 
 [tool.semantic_release]
-version_variables = ["simple-cdd-yaml/__init__.py:__version__"]
+version_variables = ["simple_cdd_yaml/__init__.py:__version__"]
 version_toml = ["pyproject.toml:project.version"]
