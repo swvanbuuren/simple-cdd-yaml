@@ -3,9 +3,12 @@
 Welcome to the documentation of
 [Simple-CDD-YAML](https://github.com/swvanbuuren/simple-cdd-yaml)!
 
-## :construction: Under construction :construction: 
+Have a look at the [introduction](introduction.md) to get a quick idea of what Simple-CDD-YAML
+is and what it can do.
 
-At the time of writing, only the [Code Reference](reference/index.md) is filled
-with life.
+To get going follow the instructions in [getting started](getting_started.md).
 
-The [getting started](getting_started.md) and [examples](examples.md) sections are still under construction.
+The [examples](examples.md) page features a simple example of a `YAML` recipe.
+
+Refer to the [code reference](reference/index.md) for the actual code and
+implementation details.
