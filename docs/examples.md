@@ -1,6 +1,6 @@
 # Examples
 
-Examples of workings recipe can be found in
+Examples of working recipes can be found in
 [simple-cdd-yam-recipes](https://github.com/swvanbuuren/simple-cdd-yaml-recipes).
 
 ## Example recipe `base` 
@@ -29,7 +29,7 @@ The recipe consists of:
     - `overlay` action: Deploys the contents of a give directory onto the
       system. This can be done by `root` (default) or by a given user.
 - Also note that it's possible to include more complex behavior using `jinja2`,
-  such as if statement as shown in this examples.
+  such as if-statements as shown in this example.
 
 ```yaml title="base.yaml"
 --8<-- "https://raw.githubusercontent.com/swvanbuuren/simple-cdd-yaml-recipes/master/recipes/base.yaml"

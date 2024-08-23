@@ -1,34 +1,33 @@
 # Getting started
 
-This page will code through to process of installing, generating a Simple-CDDp
-rofile from a YAML recipe.
+This page will guide you through the process of installing Simple-CDD-YAML and
+generating a Simple-CDD profile from a YAML recipe.
 
 ## Installation
 
-First install Simple-CDD-YAML according to the [installation
+Install Simple-CDD-YAML according to the [installation
 instructions](installation.md).
 
 ## Building a Simple-CDD profile
 
 In order to build a profile from a given recipe file `<recipe-name>.yaml`,
-located in the subdirectory `recipe`, issue the following:
+located in the subdirectory `recipe`, issue:
 
 ```bash
 simple-cdd-yaml --recipe recipe/<recipe-name>.yaml
 ``` 
 
-Make sure the  corresponding environment in which `simple-cdd-yaml` is installed
-has been activated prior to issues this command. Alternatively, you can prepend
-the command with a command to activate the environment (here called
-`<simple-cdd-yaml-venv>`):
+Make sure the appropriate environment (in which `simple-cdd-yaml` is installed)
+has been activated prior to issuing this command. Alternatively, you can prepend
+the environment activation (here called `<simple-cdd-yaml-venv>`):
 
 ```bash
 ( . ~/.venv/<simple-cdd-yaml-venv>/bin/activate && \
     simple-cdd-yaml --recipe recipe/<recipe-name>.yaml )
 ```
 
-Note that the commands are wrapped in parentheses `( ... )` to assure that the
-command runs in an isolated shell.
+Note that the commands are wrapped in parentheses `( ... )` in order to assure
+that the commands run in an isolated shell.
 
 ## Results
 
@@ -44,7 +43,7 @@ contains the Simple-CDD outputs, all named after profile name `<profile>`, but w
 The last file `<profile>.extra` contains references to additional files that are
 included into the profile. These are located in the directory `extra`. Finally,
 also a `debos` directory might appear, if you enabled the `debos` output option
-during profile build.
+during profile build and included a corresponding action into the recipe.
 
 Visit the [Simple-CDD repository](https://salsa.debian.org/debian/simple-cdd) or
 [Howto](https://wiki.debian.org/Simple-CDD/Howto) to learn more about the
