@@ -40,6 +40,11 @@ nav:
     - Getting started: getting_started.md
     - Installation: installation.md
     - Examples: examples.md
+  - Build images:
+    - build-images/index.md
+    - Build in Docker: build-images/build-in-docker.md
+    - Test on Qemu with UEFI: build-images/test-on-qemu-with-uefi.md
+    - Build with Debos: build-images/build-with-debos.md
   - Code Reference:
     - reference/index.md
     - Simple-CDD-YAML: reference/simple_cdd_yaml.md
