@@ -9,6 +9,7 @@ theme:
   - navigation.sections
   - navigation.tabs
   - navigation.indexes
+  - content.code.annotate
   - content.code.copy
 
 plugins:
@@ -21,6 +22,9 @@ plugins:
 
 markdown_extensions:
   - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
@@ -34,7 +38,7 @@ markdown_extensions:
   - pymdownx.superfences
 
 nav:
-  - Welcome:
+  - Simple-CDD-YAML:
     - index.md
     - Introduction: introduction.md
     - Getting started: getting_started.md
@@ -45,6 +49,17 @@ nav:
     - Build in Docker: build-images/build-in-docker.md
     - Test on Qemu with UEFI: build-images/test-on-qemu-with-uefi.md
     - Build with Debos: build-images/build-with-debos.md
+  - Actions:
+    - actions/index.md
+    - Recipe Action: actions/recipe.md
+    - Conf Action: actions/conf.md
+    - Preseed Action: actions/preseed.md
+    - Apt Action: actions/apt.md
+    - Run Action: actions/run.md
+    - Overlay Action: actions/overlay.md
+    - Extra Action: actions/extra.md
+    - Downloads Action: actions/downloads.md
+    - Debos Action: actions/debos.md
   - Code Reference:
     - reference/index.md
     - Simple-CDD-YAML: reference/simple_cdd_yaml.md
