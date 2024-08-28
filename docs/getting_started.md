@@ -39,6 +39,7 @@ contains the Simple-CDD outputs, all named after profile name `<profile>`, but w
 - `<profile>.postinst`
 - `<profile>.conf`
 - `<profile>.extra`
+- `<profile>.downloads`
 
 The last file `<profile>.extra` contains references to additional files that are
 included into the profile. These are located in the directory `extra`. Finally,

@@ -33,6 +33,9 @@ A few actions also support different roles: by default scripts are executed and
 overlays are deployed as root, but you can also specify to have this done by a
 given user.
 
+Visit the [Actions](actions/index.md) section to learn how to write actions and
+see what they are capable of.
+
 ## Next steps
 
 Refer to [getting started](getting_started.md) to install Simple-CDD-YAML,
