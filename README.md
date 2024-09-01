@@ -1,6 +1,6 @@
 # Simple-CDD-YAML
 
-Preprocesser for [Simple-CDD](https://salsa.debian.org/debian/simple-cdd) using
+Preprocessor for [Simple-CDD](https://salsa.debian.org/debian/simple-cdd) using
 YAML input files (so-called recipes), as inspired by
 [debos](https://github.com/go-debos/debos).
 
@@ -35,9 +35,9 @@ A few actions also support different roles: by default scripts are executed and
 overlays are deployed as root, but you can also specify to have this done by a
 given user.
 
-Please refer to the
-[documentation](https://swvanbuuren.github.io/simple-cdd-yaml/) for more
-information.
+Please refer to the [documentation on
+actions](https://swvanbuuren.github.io/simple-cdd-yaml/actions/) for detailed
+documentation for each action.
 
 ## Installation
 
@@ -48,16 +48,24 @@ Simple-CDD-YAML can be directly installed from [PyPi](https://pypi.org) using
 pip install simple-cdd-yaml
 ```
 
+Detailed instructions are found in the documentation's [installation
+section](https://swvanbuuren.github.io/simple-cdd-yaml/installation/).
+
 ## Usage
 
 After installation use the command `simple-cdd-yaml` to create Simple-CDD
 profiles from YAML files. Issue `simple-cdd-yaml --help` to get help.
 
+Detailed usage instructions are found in the [getting
+started](https://swvanbuuren.github.io/simple-cdd-yaml/getting_started/) guide.
+
 ## Examples
 
-Refer to
-[simple-cdd-yaml-recipes](https://github.com/swvanbuuren/simple-cdd-yaml-recipes)
-for example recipes.
+ Refer to the documentation's [examples
+ page](https://swvanbuuren.github.io/simple-cdd-yaml/examples/) for a detailed
+ recipe explanation. The repository
+ [simple-cdd-yaml-recipes](https://github.com/swvanbuuren/simple-cdd-yaml-recipes)
+ contains more example recipes.
 
 ## Documentation
 
