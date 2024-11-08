@@ -36,3 +36,6 @@ include = ["simple_cdd_yaml", "simple_cdd_yaml.*"]
 [tool.semantic_release]
 version_variables = ["simple_cdd_yaml/__init__.py:__version__"]
 version_toml = ["pyproject.toml:project.version"]
+
+[tool.semantic_release.changelog]
+template_dir = ".github/templates"
