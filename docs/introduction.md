@@ -4,6 +4,18 @@ Simple-CDD-YAML uses YAML recipes to generate the profile files required by
 Simple-CDD. A recipe consists of actions, that generate or append files in the
 Simple-CDD profile.
 
+## What is this "Simple-CDD" you speak of?
+
+[Simple-CDD](https://wiki.debian.org/Simple-CDD) is a limited, though relatively
+easy to use tool to create a customized DebianInstaller CD.
+
+It's a wrapper around debian-cd and mirroring tools used to create a customized
+[DebianInstaller](https://wiki.debian.org/DebianInstaller) CD image. It takes a
+list of packages to install, and debconf pre-seeding files to pre-configure the
+installation. It has some support for multiple profiles and custom post-install
+scripts for things that can't be configured by
+[debconf](https://packages.debian.org/debconf) preseeding. 
+
 ## Actions
 
 Simple-CDD-YAML features the following actions (for an

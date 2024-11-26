@@ -1,8 +1,10 @@
 # Simple-CDD-YAML
 
-Preprocessor for [Simple-CDD](https://salsa.debian.org/debian/simple-cdd) using
+Preprocessor for [Simple-CDD](https://wiki.debian.org/Simple-CDD) using
 YAML input files (so-called recipes), as inspired by
 [debos](https://github.com/go-debos/debos).
+
+Simple-CDD is a tool for creating customized debian-installer CDs.
 
 ## Introduction
 
