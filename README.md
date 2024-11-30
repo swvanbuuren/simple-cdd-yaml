@@ -74,6 +74,15 @@ started](https://swvanbuuren.github.io/simple-cdd-yaml/getting_started/) guide.
 Check out the [documentation](https://swvanbuuren.github.io/simple-cdd-yaml/) to
 get started, find more background information and query the code reference.
 
+## Pre-commit hooks
+
+This repository comes with pre-commit hooks, which are stored in
+[`.githooks`](.githooks). To enable the hooks issue:
+
+```bash
+git config --local core.hooksPath .githooks/
+```
+
 ## License
 
 An MIT style license applies for Simple-CDD-YAML, see the [LICENSE](LICENSE)
