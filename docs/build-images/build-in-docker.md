@@ -20,12 +20,18 @@ First create a file called `Dockerfile` with the contents below. Replace
 FROM debian:<dist>-slim
 
 RUN apt-get update
-RUN apt-get -y install --install-recommends simple-cdd xorriso gpg
+RUN apt-get -y install --install-recommends simple-cdd xorriso gpg distro-info-data
+
+RUN sed -i 's/if a == "amd64" and "i386" not in self.env.get("ARCHES"):/if False and a == "amd64" and "i386" not in self.env.get("ARCHES"):/' /usr/share/simple-cdd/build-simple-cdd #(1)!
 
 RUN useradd -ms /bin/bash user
 USER user
 WORKDIR /home/user
 ```
+
+1. When building with Simple-CDD v0.6.9, this hack is necessary to disable the
+   enforcement of installing the i386 installer for amd64 builds. This will
+   fail, because this installer was removed from Trixie.
 
 ## Build docker image
 

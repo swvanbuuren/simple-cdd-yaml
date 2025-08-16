@@ -27,7 +27,7 @@ actions:
    used.
 3. [**Required**] Relative link to overlay file structure
    `command` keyword.
- 4. [**Optional**] Destination where the overlay file structure is copied to. If
+4. [**Optional**] Destination where the overlay file structure is copied to. If
     `destination` and `user` are omitted, `/` is used. If `destination` is omitted but `user` is provided, `/home/{user}` is used.
 
 ## Implementation
