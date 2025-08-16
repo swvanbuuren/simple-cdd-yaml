@@ -16,13 +16,14 @@ First create a file called `Dockerfile` with the contents below. Replace
 `<dist>` with the Debian version for which you'd like to build your image, e.g.
 `buster`, `bullseye` or `bookworm`:
 
-```docker
+```Dockerfile
 FROM debian:<dist>-slim
 
 RUN apt-get update
 RUN apt-get -y install --install-recommends simple-cdd xorriso gpg distro-info-data
 
-RUN sed -i 's/if a == "amd64" and "i386" not in self.env.get("ARCHES"):/if False and a == "amd64" and "i386" not in self.env.get("ARCHES"):/' /usr/share/simple-cdd/build-simple-cdd #(1)!
+RUN sed -i 's/if a == "amd64" and "i386" not in self.env.get("ARCHES"):/if False and a == "amd64" and "i386" not in self.env.get("ARCHES"):/' /usr/share/simple-cdd/build-simple-cdd  
+#(1)!
 
 RUN useradd -ms /bin/bash user
 USER user
