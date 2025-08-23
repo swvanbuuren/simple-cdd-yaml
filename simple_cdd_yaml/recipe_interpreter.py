@@ -13,10 +13,15 @@ POSTINST_TEMPLATE_STR = \
 
 # Find and set variables
 PROFILE={{profile}}
-for mounted in /media/*/ ; do
+# Mount cdrom and set Simple-CDD EXTRAS location
+mkdir -p /mnt/cdrom
+mount -o ro /dev/sr0 /mnt/cdrom
+SCDD_EXTRAS=""
+for mounted in /media/*/ /cdrom/ /mnt/cdrom/ ; do
     candidate=$mounted"simple-cdd"
     if [ -d "$candidate" ] ; then SCDD_EXTRAS="$candidate"; break; fi
 done
+echo "SCDD_EXTRAS=$SCDD_EXTRAS"
 
 """
 
