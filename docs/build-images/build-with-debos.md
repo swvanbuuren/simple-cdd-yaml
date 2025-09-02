@@ -30,7 +30,7 @@ qemu-system-x86_64 \
     -m 2048 \
     -enable-kvm \
     -cpu host \
-    -drive if=pflash,format=raw,readonly,file=/usr/share/ovmf/OVMF.fd \
+    -drive if=pflash,format=raw,readonly=on,file=/usr/share/ovmf/OVMF.fd \
     -drive if=virtio,format=qcow2,cache=unsafe,file=debian-bookworm-amd64.qcow2
 ```
 Please note that, depending on the recipe, the image name
