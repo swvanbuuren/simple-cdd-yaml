@@ -178,15 +178,23 @@ class Action:
 
 class ConfAction(Action):
     """ Conf action """
+
+    @staticmethod
+    def _handle_value(value):
+        """ Remove trailing spaces and make sure values are strings """
+        if isinstance(value, str):
+            return value.rstrip()
+        return ''
+
     def perform_action(self, props):
         description = props.get('description', 'Conf settings')
         conf_str = f'# {description}\n'
         if variables := props.get('variables'):
             for var, value in variables.items():
-                conf_str += f'{var}="{value.rstrip()}"\n'
+                conf_str += f'{var}="{self._handle_value(value)}"\n'
         if env_variables := props.get('env_variables'):
             for var, value in env_variables.items():
-                conf_str += f'export {var}="{value.rstrip()}"\n'
+                conf_str += f'export {var}="{self._handle_value(value)}"\n'
         if variables or env_variables:
             return conf_str
         return None
