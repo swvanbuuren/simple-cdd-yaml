@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## v0.1.2 (2025-09-07)
+
+### Bug Fixes
+
+* Handle non-string variable values in conf action ([`d5b9452`](https://github.com/swvanbuuren/simple-cdd-yaml/commit/d5b94520e59be911779e380103b2c0456ff0342d))
+
+### Chores
+
+* Prescribe minimum dependent package versions ([`f8bff5e`](https://github.com/swvanbuuren/simple-cdd-yaml/commit/f8bff5e0474fdd3a459642a44c002a3a3d8fe4f3))
+
+### Documentation
+
+* Update qemu readonly option usage ([`84382ae`](https://github.com/swvanbuuren/simple-cdd-yaml/commit/84382ae0e5dc36339f4f70331af12b66091b0f3f))
 ## v0.1.1 (2025-08-23)
 
 ### Bug Fixes
