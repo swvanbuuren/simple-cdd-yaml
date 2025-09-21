@@ -22,7 +22,6 @@ FROM debian:<dist>-slim
 RUN apt-get update
 RUN apt-get -y install --install-recommends xorriso gpg distro-info-data wget
 
-RUN apt-get -y install --install-recommends xorriso gpg distro-info-data wget
 RUN wget https://deb.debian.org/debian/pool/main/s/simple-cdd/simple-cdd_0.6.10_all.deb
 RUN wget https://deb.debian.org/debian/pool/main/s/simple-cdd/python3-simple-cdd_0.6.10_all.deb
 RUN apt-get -y install ./simple-cdd_0.6.10_all.deb ./python3-simple-cdd_0.6.10_all.deb
