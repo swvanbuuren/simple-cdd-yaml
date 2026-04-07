@@ -2,4 +2,3 @@ __pycache__/
 simple_cdd_yaml.egg-info/
 site/
 .venv
-uv.lock
