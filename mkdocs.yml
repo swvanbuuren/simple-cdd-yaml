@@ -4,7 +4,7 @@ repo_url: https://github.com/swvanbuuren/simple-cdd-yaml
 repo_name: swvanbuuren/simple-cdd-yaml
 
 theme:
-  name: material
+  variant: classic
   features:
   - navigation.sections
   - navigation.tabs
